@@ -40,7 +40,7 @@ function drawColorMap(data) {
 function getColor(value) {
     // 値に基づいて色を決定
     const min = 0; // 最小値（適宜調整）
-    const max = 100; // 最大値（適宜調整）
+    const max = 20; // 最大値（適宜調整）
     const ratio = (value - min) / (max - min);
     const red = Math.floor(255 * ratio);
     const blue = 255 - red;
