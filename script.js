@@ -59,7 +59,7 @@ function drawColorMap(data, min, max) {
 
 function getColor(value, min, max) {
     const ratio = (value - min) / (max - min);
-    const red = Math.floor(255 * ratio);
-    const blue = 255 - red;
+    const blue = Math.floor(255 * ratio);
+    const red = 255 - blue;
     return `rgb(${red}, 0, ${blue})`;
 }
