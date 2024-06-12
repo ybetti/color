@@ -4,7 +4,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         alert('CSVファイルを選択してください。');
         return;
     }
-
+    
     const reader = new FileReader();
     reader.onload = function(e) {
         const text = e.target.result;
