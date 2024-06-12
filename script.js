@@ -78,7 +78,12 @@ function updateColorMap() {
 }
 
 function getColorForValue(value, min, max) {
-    // Reverse the color scale: from red (low) to blue (high)
-    const hue = ((value - min) / (max - min) * 240).toString(10); // 240 for blue, 0 for red
-    return `hsl(${hue}, 100%, 50%)`;
+    if (value <= min) {
+        return `hsl(0, 100%, 50%)`; // Red for values <= min
+    } else if (value >= max) {
+        return `hsl(240, 100%, 50%)`; // Blue for values >= max
+    } else {
+        const hue = ((1 - (value - min) / (max - min)) * 240).toString(10);
+        return `hsl(${hue}, 100%, 50%)`; // Gradient from red to blue
+    }
 }
