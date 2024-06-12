@@ -3,75 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Map from CSV</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.0.0/d3.min.js"></script>
+    <title>CSV to Color Map</title>
     <style>
-        .color-legend {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
+        table {
+            border-collapse: collapse;
         }
 
-        .color-legend span {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
+        table, th, td {
+            border: 1px solid black;
+            padding: 5px;
         }
     </style>
 </head>
 <body>
-    <h1>Color Map from CSV</h1>
-    <div id="color-map"></div>
-    <div class="color-legend">
-        <span style="background-color: #e41a1c;"></span> 0-10
-        <span style="background-color: #377eb8;"></span> 11-20
-        <span style="background-color: #4daf4a;"></span> 21-30
-        <span style="background-color: #984ea3;"></span> 31-40
-        <span style="background-color: #ff7f00;"></span> 41-50
-        <span style="background-color: #ffff33;"></span> 51-60
-        <span style="background-color: #a65628;"></span> 61-70
-        <span style="background-color: #f781bf;"></span> 71-80
-        <span style="background-color: #999999;"></span> 81-90
-        <span style="background-color: #f0f0f0;"></span> 91-100
-    </div>
+    <input type="file" id="fileInput" accept=".csv">
+    <div id="colorMap"></div>
 
-    <script>
-        d3.csv("your_data.csv").then(function(data) {
-            var colorMap = d3.select("#color-map");
-
-            data.forEach(function(d) {
-                var value = parseFloat(d.value);
-                var color;
-                if (value >= 0 && value <= 10) {
-                    color = "#e41a1c";
-                } else if (value >= 11 && value <= 20) {
-                    color = "#377eb8";
-                } else if (value >= 21 && value <= 30) {
-                    color = "#4daf4a";
-                } else if (value >= 31 && value <= 40) {
-                    color = "#984ea3";
-                } else if (value >= 41 && value <= 50) {
-                    color = "#ff7f00";
-                } else if (value >= 51 && value <= 60) {
-                    color = "#ffff33";
-                } else if (value >= 61 && value <= 70) {
-                    color = "#a65628";
-                } else if (value >= 71 && value <= 80) {
-                    color = "#f781bf";
-                } else if (value >= 81 && value <= 90) {
-                    color = "#999999";
-                } else {
-                    color = "#f0f0f0";
-                }
-
-                colorMap.append("div")
-                    .style("background-color", color)
-                    .style("width", "20px")
-                    .style("height", "20px")
-                    .style("margin", "2px");
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
