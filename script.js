@@ -77,8 +77,8 @@ function updateColorMap() {
     colorMap.appendChild(table);
 }
 
-
 function getColorForValue(value, min, max) {
-    const hue = ((1 - (value - min) / (max - min)) * 120).toString(10);
+    // Reverse the color scale: from red (low) to blue (high)
+    const hue = ((value - min) / (max - min) * 240).toString(10); // 240 for blue, 0 for red
     return `hsl(${hue}, 100%, 50%)`;
 }
