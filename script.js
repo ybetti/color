@@ -77,6 +77,7 @@ function updateColorMap() {
     colorMap.appendChild(table);
 }
 
+
 function getColorForValue(value, min, max) {
     const hue = ((1 - (value - min) / (max - min)) * 120).toString(10);
     return `hsl(${hue}, 100%, 50%)`;
