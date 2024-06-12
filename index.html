@@ -1,74 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Map</title>
-    <style>
-        .color-map {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-        .color-bar {
-            width: 20px;
-            height: 100px;
-            margin-right: 10px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Map</title>
+<style>
+  /* スタイル調整 */
+  #color-map {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .color-block {
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    border: 1px solid #000;
+  }
+</style>
 </head>
 <body>
-    <input type="file" id="fileInput" accept=".csv">
-    <div id="colorMap" class="color-map"></div>
+<h1>Color Map2</h1>
+<input type="file" id="file-input" accept=".csv">
+<div id="color-map"></div>
 
-    <script>
-        document.getElementById('fileInput').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const csvData = e.target.result.split('\n').map(row => row.trim()).filter(row => row !== '');
-                createColorMap(csvData);
-            };
-            reader.readAsText(file);
-        });
+<script>
+document.getElementById('file-input').addEventListener('change', handleFileSelect, false);
 
-        // カラーマップを作成
-        function createColorMap(data) {
-            const colorMapElement = document.getElementById('colorMap');
-            colorMapElement.innerHTML = ''; // 初期化
+function handleFileSelect(event) {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const csv = event.target.result;
+    processData(csv);
+  };
+  reader.readAsText(file);
+}
 
-            const maxVal = Math.max(...data.filter(val => !isNaN(val)));
-            const minVal = Math.min(...data.filter(val => !isNaN(val)));
-            const range = maxVal - minVal;
+function processData(csv) {
+  const data = csv.split('\n').map(row => row.trim().split(','));
+  const numbers = data.map(row => parseFloat(row[0]));
+  const max = Math.max(...numbers);
+  const min = Math.min(...numbers);
+  const step = (max - min) / 10;
 
-            data.forEach(value => {
-                if (!isNaN(value)) {
-                    const normalizedValue = (value - minVal) / range;
-                    const color = getColor(normalizedValue);
-                    const colorBar = document.createElement('div');
-                    colorBar.className = 'color-bar';
-                    colorBar.style.backgroundColor = color;
-                    colorMapElement.appendChild(colorBar);
-                } else {
-                    // 数値が存在しない場合は白色にする
-                    const colorBar = document.createElement('div');
-                    colorBar.className = 'color-bar';
-                    colorBar.style.backgroundColor = 'white';
-                    colorMapElement.appendChild(colorBar);
-                }
-            });
-        }
+  const colorMap = document.getElementById('color-map');
+  colorMap.innerHTML = '';
 
-        // 値に基づいてカラーマップを作成
-        function getColor(value) {
-            // ここでカラーマップの色を指定
-            const colors = [
-                '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107',
-                '#FF9800', '#FF5722', '#E91E63', '#9C27B0', '#673AB7'
-            ];
-            const index = Math.floor(value * 10);
-            return colors[index];
-        }
-    </script>
+  for (let i = 0; i < 10; i++) {
+    const rangeMin = min + step * i;
+    const rangeMax = min + step * (i + 1);
+    const color = getColor(i);
+    const div = document.createElement('div');
+    div.classList.add('color-block');
+    div.style.backgroundColor = color;
+    div.textContent = `${rangeMin.toFixed(2)} - ${rangeMax.toFixed(2)}`;
+    colorMap.appendChild(div);
+  }
+}
+
+function getColor(index) {
+  // ここで、各段階の色を自由に設定できます
+  const colors = ['#FF0000', '#FF4500', '#FFA500', '#FFFF00', '#00FF00', '#00FFFF', '#0000FF', '#8A2BE2', '#FF00FF', '#800080'];
+  return colors[index];
+}
+</script>
 </body>
 </html>
