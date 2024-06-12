@@ -60,7 +60,7 @@
     // データの値に対応する色をマッピングし、カラーマップを描画
     data.forEach(row => {
       row.forEach(value => {
-        const color = getColorForValue(value, colorStops);
+        const color = getColorForValue(value, colorStops, minValue, maxValue);
         const colorBox = document.createElement('div');
         colorBox.style.backgroundColor = color;
         colorBox.classList.add('color-box');
@@ -70,12 +70,12 @@
   }
 
   // 値に対応する色を取得する関数
-  function getColorForValue(value, colorStops) {
+  function getColorForValue(value, colorStops, minValue, maxValue) {
     for (let i = 1; i < colorStops.length; i++) {
       if (value <= colorStops[i].value) {
         const prevStop = colorStops[i - 1];
         const nextStop = colorStops[i];
-        const ratio = (value - prevStop.value) / (nextStop.value - prevStop.value);
+        const ratio = (value - minValue) / (maxValue - minValue);
         const color = blendColors(prevStop.color, nextStop.color, ratio);
         return color;
       }
