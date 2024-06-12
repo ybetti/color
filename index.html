@@ -13,6 +13,9 @@
             border: 1px solid black;
             padding: 5px;
         }
+        .color-input {
+            margin: 5px;
+        }
     </style>
 </head>
 <body>
@@ -22,6 +25,38 @@
         <input type="number" id="minValue" value="0">
         <label for="maxValue">Max Value:</label>
         <input type="number" id="maxValue" value="100">
+    </div>
+    <div id="colorSelectors">
+        <div class="color-input">
+            <label>1% - 10%: <input type="color" id="color1" value="#ff9999"></label>
+        </div>
+        <div class="color-input">
+            <label>11% - 20%: <input type="color" id="color2" value="#ff6666"></label>
+        </div>
+        <div class="color-input">
+            <label>21% - 30%: <input type="color" id="color3" value="#ff3333"></label>
+        </div>
+        <div class="color-input">
+            <label>31% - 40%: <input type="color" id="color4" value="#ff0000"></label>
+        </div>
+        <div class="color-input">
+            <label>41% - 50%: <input type="color" id="color5" value="#cc0000"></label>
+        </div>
+        <div class="color-input">
+            <label>51% - 60%: <input type="color" id="color6" value="#990000"></label>
+        </div>
+        <div class="color-input">
+            <label>61% - 70%: <input type="color" id="color7" value="#660000"></label>
+        </div>
+        <div class="color-input">
+            <label>71% - 80%: <input type="color" id="color8" value="#330000"></label>
+        </div>
+        <div class="color-input">
+            <label>81% - 90%: <input type="color" id="color9" value="#000099"></label>
+        </div>
+        <div class="color-input">
+            <label>91% - 100%: <input type="color" id="color10" value="#000066"></label>
+        </div>
     </div>
     <button id="updateButton">Update Color Map</button>
     <button id="saveButton">Save as Image</button>
