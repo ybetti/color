@@ -1,104 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Color Map from CSV Data</title>
-<style>
-  .color-map {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-    gap: 2px;
-  }
-  .color-box {
-    width: 100%;
-    height: 50px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Map from CSV</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.0.0/d3.min.js"></script>
+    <style>
+        .color-legend {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .color-legend span {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
-<h1>Color Map from CSV Data</h1>
-<input type="file" id="csv-input" accept=".csv">
-<div id="color-map" class="color-map"></div>
+    <h1>Color Map from CSV</h1>
+    <div id="color-map"></div>
+    <div class="color-legend">
+        <span style="background-color: #e41a1c;"></span> 0-10
+        <span style="background-color: #377eb8;"></span> 11-20
+        <span style="background-color: #4daf4a;"></span> 21-30
+        <span style="background-color: #984ea3;"></span> 31-40
+        <span style="background-color: #ff7f00;"></span> 41-50
+        <span style="background-color: #ffff33;"></span> 51-60
+        <span style="background-color: #a65628;"></span> 61-70
+        <span style="background-color: #f781bf;"></span> 71-80
+        <span style="background-color: #999999;"></span> 81-90
+        <span style="background-color: #f0f0f0;"></span> 91-100
+    </div>
 
-<script>
-  // 選択されたCSVファイルを読み込む関数
-  function handleFileSelect(event) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const csv = e.target.result;
-      const data = csv.split('\n').map(row => row.trim().split(',').map(cell => parseFloat(cell)));
-      renderColorMap(data);
-    };
-    reader.readAsText(file);
-  }
+    <script>
+        d3.csv("your_data.csv").then(function(data) {
+            var colorMap = d3.select("#color-map");
 
-  // カラーマップを描画する関数
-  function renderColorMap(data) {
-    const colorMapDiv = document.getElementById('color-map');
-    colorMapDiv.innerHTML = '';
+            data.forEach(function(d) {
+                var value = parseFloat(d.value);
+                var color;
+                if (value >= 0 && value <= 10) {
+                    color = "#e41a1c";
+                } else if (value >= 11 && value <= 20) {
+                    color = "#377eb8";
+                } else if (value >= 21 && value <= 30) {
+                    color = "#4daf4a";
+                } else if (value >= 31 && value <= 40) {
+                    color = "#984ea3";
+                } else if (value >= 41 && value <= 50) {
+                    color = "#ff7f00";
+                } else if (value >= 51 && value <= 60) {
+                    color = "#ffff33";
+                } else if (value >= 61 && value <= 70) {
+                    color = "#a65628";
+                } else if (value >= 71 && value <= 80) {
+                    color = "#f781bf";
+                } else if (value >= 81 && value <= 90) {
+                    color = "#999999";
+                } else {
+                    color = "#f0f0f0";
+                }
 
-    // カラーマップの最小値と最大値を取得
-    const minValue = Math.min(...data.flat());
-    const maxValue = Math.max(...data.flat());
-
-    // カラーマップの色と値を自由に変更できるようにする
-    const colorStops = [
-      { color: 'blue', value: minValue },
-      { color: 'lightblue', value: (maxValue - minValue) * 0.1 + minValue },
-      { color: 'cyan', value: (maxValue - minValue) * 0.2 + minValue },
-      { color: 'lightgreen', value: (maxValue - minValue) * 0.3 + minValue },
-      { color: 'green', value: (maxValue - minValue) * 0.4 + minValue },
-      { color: 'yellow', value: (maxValue - minValue) * 0.5 + minValue },
-      { color: 'orange', value: (maxValue - minValue) * 0.6 + minValue },
-      { color: 'red', value: (maxValue - minValue) * 0.7 + minValue },
-      { color: 'purple', value: (maxValue - minValue) * 0.8 + minValue },
-      { color: 'black', value: maxValue }
-    ];
-
-    // データの値に対応する色をマッピングし、カラーマップを描画
-    data.forEach(row => {
-      row.forEach(value => {
-        const color = getColorForValue(value, colorStops, minValue, maxValue);
-        const colorBox = document.createElement('div');
-        colorBox.style.backgroundColor = color;
-        colorBox.classList.add('color-box');
-        colorMapDiv.appendChild(colorBox);
-      });
-    });
-  }
-
-  // 値に対応する色を取得する関数
-  function getColorForValue(value, colorStops, minValue, maxValue) {
-    for (let i = 1; i < colorStops.length; i++) {
-      if (value <= colorStops[i].value) {
-        const prevStop = colorStops[i - 1];
-        const nextStop = colorStops[i];
-        const ratio = (value - minValue) / (maxValue - minValue);
-        const color = blendColors(prevStop.color, nextStop.color, ratio);
-        return color;
-      }
-    }
-    return colorStops[colorStops.length - 1].color;
-  }
-
-  // カラーマップ用の色をブレンドする関数
-  function blendColors(color1, color2, ratio) {
-    const r1 = parseInt(color1.substring(1, 3), 16);
-    const g1 = parseInt(color1.substring(3, 5), 16);
-    const b1 = parseInt(color1.substring(5, 7), 16);
-    const r2 = parseInt(color2.substring(1, 3), 16);
-    const g2 = parseInt(color2.substring(3, 5), 16);
-    const b2 = parseInt(color2.substring(5, 7), 16);
-    const r = Math.round(r1 + (r2 - r1) * ratio);
-    const g = Math.round(g1 + (g2 - g1) * ratio);
-    const b = Math.round(b1 + (b2 - b1) * ratio);
-    return `rgb(${r}, ${g}, ${b})`;
-  }
-
-  // ファイル選択時に処理を実行
-  document.getElementById('csv-input').addEventListener('change', handleFileSelect);
-</script>
+                colorMap.append("div")
+                    .style("background-color", color)
+                    .style("width", "20px")
+                    .style("height", "20px")
+                    .style("margin", "2px");
+            });
+        });
+    </script>
 </body>
 </html>
