@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,25 +18,31 @@
     </style>
 </head>
 <body>
+    <input type="file" id="fileInput" accept=".csv">
     <div id="colorMap" class="color-map"></div>
 
     <script>
-        // CSVデータを入力
-        const csvData = [
-            20, 30, "ND", 60, "", 85, 90, 100, 110, 120
-        ];
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const csvData = e.target.result.split('\n').map(row => row.trim()).filter(row => row !== '');
+                createColorMap(csvData);
+            };
+            reader.readAsText(file);
+        });
 
         // カラーマップを作成
         function createColorMap(data) {
             const colorMapElement = document.getElementById('colorMap');
             colorMapElement.innerHTML = ''; // 初期化
 
-            const maxVal = Math.max(...data.filter(val => typeof val === 'number'));
-            const minVal = Math.min(...data.filter(val => typeof val === 'number'));
+            const maxVal = Math.max(...data.filter(val => !isNaN(val)));
+            const minVal = Math.min(...data.filter(val => !isNaN(val)));
             const range = maxVal - minVal;
 
             data.forEach(value => {
-                if (typeof value === 'number') {
+                if (!isNaN(value)) {
                     const normalizedValue = (value - minVal) / range;
                     const color = getColor(normalizedValue);
                     const colorBar = document.createElement('div');
@@ -44,7 +50,7 @@
                     colorBar.style.backgroundColor = color;
                     colorMapElement.appendChild(colorBar);
                 } else {
-                    // 数値が存在しない場合や"ND"の場合は白色にする
+                    // 数値が存在しない場合は白色にする
                     const colorBar = document.createElement('div');
                     colorBar.className = 'color-bar';
                     colorBar.style.backgroundColor = 'white';
@@ -63,9 +69,6 @@
             const index = Math.floor(value * 10);
             return colors[index];
         }
-
-        // カラーマップを初期化
-        createColorMap(csvData);
     </script>
 </body>
 </html>
