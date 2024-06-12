@@ -49,8 +49,10 @@ function drawColorMap(data, min, max) {
             const value = data[i][j];
             if (value === null) {
                 ctx.fillStyle = 'white';
+            } else if (value >= 10) {
+                ctx.fillStyle = getColor(10, min, max);  // 10の値で色を取得
             } else {
-                ctx.fillStyle = getColor(value, min, max);
+                ctx.fillStyle = getColor(value, min, 10);  // 10を最大値としたグラデーション
             }
             ctx.fillRect(j * cellWidth, i * cellHeight, cellWidth, cellHeight);
         }
