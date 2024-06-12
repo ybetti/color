@@ -83,12 +83,32 @@ function updateColorMap() {
 
 function getColorForValue(value, min, max) {
     if (value <= min) {
-        return `hsl(0, 100%, 50%)`; // Red for values <= min
+        return document.getElementById('color1').value; // Use the color for 1-10% for min values
     } else if (value > max) {
-        return `hsl(240, 100%, 50%)`; // Blue for values > max
+        return document.getElementById('color10').value; // Use the color for 91-100% for max values
     } else {
-        const hue = ((value - min) / (max - min) * 240).toString(10); // 0 for red to 240 for blue
-        return `hsl(${hue}, 100%, 50%)`; // Gradient from red to blue
+        const percentage = (value - min) / (max - min) * 100;
+        if (percentage <= 10) {
+            return document.getElementById('color1').value;
+        } else if (percentage <= 20) {
+            return document.getElementById('color2').value;
+        } else if (percentage <= 30) {
+            return document.getElementById('color3').value;
+        } else if (percentage <= 40) {
+            return document.getElementById('color4').value;
+        } else if (percentage <= 50) {
+            return document.getElementById('color5').value;
+        } else if (percentage <= 60) {
+            return document.getElementById('color6').value;
+        } else if (percentage <= 70) {
+            return document.getElementById('color7').value;
+        } else if (percentage <= 80) {
+            return document.getElementById('color8').value;
+        } else if (percentage <= 90) {
+            return document.getElementById('color9').value;
+        } else {
+            return document.getElementById('color10').value;
+        }
     }
 }
 
@@ -101,4 +121,3 @@ function saveColorMapAsImage() {
         link.click();
     });
 }
-
