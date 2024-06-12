@@ -83,7 +83,7 @@ function getColorForValue(value, min, max) {
     } else if (value > max) {
         return `hsl(240, 100%, 50%)`; // Blue for values > max
     } else {
-        const hue = ((1 - (value - min) / (max - min)) * 240).toString(10);
-        return `hsl(${hue}, 100%, 50%)`; // Gradient from red to blue
+        const hue = ((value - min) / (max - min) * 240).toString(10); // 0 for red to 240 for blue
+        return `hsl(${240 - hue}, 100%, 50%)`; // Gradient from red to blue
     }
 }
