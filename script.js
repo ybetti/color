@@ -84,6 +84,6 @@ function getColorForValue(value, min, max) {
         return `hsl(240, 100%, 50%)`; // Blue for values > max
     } else {
         const hue = ((value - min) / (max - min) * 240).toString(10); // 0 for red to 240 for blue
-        return `hsl(${240 - hue}, 100%, 50%)`; // Gradient from red to blue
+        return `hsl(${hue}, 100%, 50%)`; // Gradient from red to blue
     }
 }
