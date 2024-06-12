@@ -17,6 +17,13 @@
 </head>
 <body>
     <input type="file" id="fileInput" accept=".csv">
+    <div>
+        <label for="minValue">Min Value:</label>
+        <input type="number" id="minValue" value="0">
+        <label for="maxValue">Max Value:</label>
+        <input type="number" id="maxValue" value="100">
+    </div>
+    <button id="updateButton">Update Color Map</button>
     <div id="colorMap"></div>
 
     <script src="script.js"></script>
