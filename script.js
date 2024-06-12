@@ -29,6 +29,11 @@ document.getElementById('fileInput').addEventListener('change', function(e) {
             rowData.forEach(cell => {
                 const td = document.createElement('td');
                 td.textContent = cell;
+                // Color the cell based on its numeric value
+                const numericValue = parseFloat(cell);
+                if (!isNaN(numericValue)) {
+                    td.style.backgroundColor = getColorForValue(numericValue);
+                }
                 row.appendChild(td);
             });
             table.appendChild(row);
@@ -37,3 +42,11 @@ document.getElementById('fileInput').addEventListener('change', function(e) {
         colorMap.appendChild(table);
     };
 });
+
+function getColorForValue(value) {
+    // Example color scale: from green (low) to red (high)
+    const min = 0;
+    const max = 100;
+    const hue = ((1 - (value - min) / (max - min)) * 120).toString(10);
+    return ["hsl(", hue, ",100%,50%)"].join("");
+}
