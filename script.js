@@ -18,6 +18,10 @@ document.getElementById('updateButton').addEventListener('click', function() {
     updateColorMap();
 });
 
+document.getElementById('saveButton').addEventListener('click', function() {
+    saveColorMapAsImage();
+});
+
 function calculateMinMax() {
     if (!globalData) return;
 
@@ -86,4 +90,14 @@ function getColorForValue(value, min, max) {
         const hue = ((value - min) / (max - min) * 240).toString(10); // 0 for red to 240 for blue
         return `hsl(${hue}, 100%, 50%)`; // Gradient from red to blue
     }
+}
+
+function saveColorMapAsImage() {
+    const colorMap = document.getElementById('colorMap');
+    html2canvas(colorMap).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'colorMap.png';
+        link.href = canvas.toDataURL();
+        link.click();
+    });
 }
