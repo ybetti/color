@@ -19,7 +19,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
 
 function parseCSV(text) {
     const rows = text.split('\n');
-    return rows.map(row => row.split(',').map(cell => cell.trim() === '' ? null : Number(cell.trim())));
+    return rows.map(row => row.split(',').map(cell => cell.trim() === 'ND' || cell.trim() === '' ? null : Number(cell.trim())));
 }
 
 function findMinMax(data) {
