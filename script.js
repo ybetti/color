@@ -4,7 +4,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         alert('CSVファイルを選択してください。');
         return;
     }
-    
+
     const reader = new FileReader();
     reader.onload = function(e) {
         const text = e.target.result;
@@ -12,6 +12,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         const minMax = findMinMax(data);
         document.getElementById('minValue').textContent = `最小値: ${minMax.min}`;
         document.getElementById('maxValue').textContent = `最大値: ${minMax.max}`;
+        adjustCanvasSize(data);
         drawColorMap(data, minMax.min, minMax.max);
     };
     reader.readAsText(file);
@@ -34,6 +35,16 @@ function findMinMax(data) {
         });
     });
     return { min, max };
+}
+
+function adjustCanvasSize(data) {
+    const canvas = document.getElementById('colorMapCanvas');
+    const rows = data.length;
+    const cols = data[0].length;
+    const cellSize = 20; // 1セルあたりのサイズ（ピクセル）
+
+    canvas.width = cols * cellSize;
+    canvas.height = rows * cellSize;
 }
 
 function drawColorMap(data, min, max) {
