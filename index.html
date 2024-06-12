@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Map</title>
+    <title>CSV to Color Map</title>
     <style>
         table {
             border-collapse: collapse;
@@ -24,8 +24,11 @@
         <input type="number" id="maxValue" value="100">
     </div>
     <button id="updateButton">Update Color Map</button>
+    <button id="saveButton">Save as Image</button>
     <div id="colorMap"></div>
 
+    <!-- html2canvasライブラリの追加 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
