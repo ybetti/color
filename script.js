@@ -52,7 +52,7 @@ function drawColorMap(data, min, max) {
             } else if (value >= 10) {
                 ctx.fillStyle = getColor(10, min, max);  // 10の値で色を取得
             } else {
-                ctx.fillStyle = getColor(value, min, 10);  // 10を最大値としたグラデーション
+                ctx.fillStyle = getColor(value, 1, 10);  // 1から10を最大値としたグラデーション
             }
             ctx.fillRect(j * cellWidth, i * cellHeight, cellWidth, cellHeight);
         }
@@ -61,7 +61,6 @@ function drawColorMap(data, min, max) {
 
 function getColor(value, min, max) {
     const ratio = (value - min) / (max - min);
-    const blue = Math.floor(255 * ratio);
-    const red = 255 - blue;
-    return `rgb(${red}, 0, ${blue})`;
+    const hue = (1 - ratio) * 240; // 0 = blue, 240 = red
+    return `hsl(${hue}, 100%, 50%)`;
 }
