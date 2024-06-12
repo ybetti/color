@@ -48,5 +48,5 @@ function getColorForValue(value) {
     const min = 0;
     const max = 100;
     const hue = ((1 - (value - min) / (max - min)) * 120).toString(10);
-    return ["hsl(", hue, ",100%,50%)"].join("");
+    return `hsl(${hue}, 100%, 50%)`;
 }
