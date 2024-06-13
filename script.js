@@ -82,26 +82,43 @@ function updateColorMap() {
 }
 
 function getColorForValue(value, min, max) {
-    const percent1 = parseFloat(document.getElementById('percent1').value);
-    const percent2 = parseFloat(document.getElementById('percent2').value);
-    const percent3 = parseFloat(document.getElementById('percent3').value);
-    // 同様に他のパーセント値も取得
+    const ranges = [
+        parseFloat(document.getElementById('range1').value),
+        parseFloat(document.getElementById('range2').value),
+        parseFloat(document.getElementById('range3').value),
+        parseFloat(document.getElementById('range4').value),
+        parseFloat(document.getElementById('range5').value),
+        parseFloat(document.getElementById('range6').value),
+        parseFloat(document.getElementById('range7').value),
+        parseFloat(document.getElementById('range8').value),
+        parseFloat(document.getElementById('range9').value),
+        parseFloat(document.getElementById('range10').value)
+    ];
+
+    const colors = [
+        document.getElementById('color1').value,
+        document.getElementById('color2').value,
+        document.getElementById('color3').value,
+        document.getElementById('color4').value,
+        document.getElementById('color5').value,
+        document.getElementById('color6').value,
+        document.getElementById('color7').value,
+        document.getElementById('color8').value,
+        document.getElementById('color9').value,
+        document.getElementById('color10').value
+    ];
 
     if (value <= min) {
-        return document.getElementById('color1').value; // Use the color for 1-10% for min values
+        return colors[0];
     } else if (value > max) {
-        return document.getElementById('color10').value; // Use the color for 91-100% for max values
+        return colors[colors.length - 1];
     } else {
         const percentage = (value - min) / (max - min) * 100;
-        if (percentage <= percent1) {
-            return document.getElementById('color1').value;
-        } else if (percentage <= percent2) {
-            return document.getElementById('color2').value;
-        } else if (percentage <= percent3) {
-            return document.getElementById('color3').value;
+        for (let i = 0; i < ranges.length; i++) {
+            if (percentage <= ranges[i]) {
+                return colors[i];
+            }
         }
-        // 同様に他のパーセント範囲も追加
+        return colors[colors.length - 1]; // Default to the last color if no match is found
     }
 }
-
-
