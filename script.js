@@ -82,25 +82,25 @@ function updateColorMap() {
 }
 
 function getColorForValue(value, min, max) {
+    const percent1 = parseFloat(document.getElementById('percent1').value);
+    const percent2 = parseFloat(document.getElementById('percent2').value);
+    const percent3 = parseFloat(document.getElementById('percent3').value);
+    // 同様に他のパーセント値も取得
+
     if (value <= min) {
         return document.getElementById('color1').value; // Use the color for 1-10% for min values
     } else if (value > max) {
-        return document.getElementById('color6').value; // Use the color for 91-100% for max values
+        return document.getElementById('color10').value; // Use the color for 91-100% for max values
     } else {
         const percentage = (value - min) / (max - min) * 100;
-        if (percentage <= parseFloat(document.getElementById('percent1').value)) {
+        if (percentage <= percent1) {
             return document.getElementById('color1').value;
-        } else if (percentage <= parseFloat(document.getElementById('percent2').value)) {
+        } else if (percentage <= percent2) {
             return document.getElementById('color2').value;
-        } else if (percentage <= parseFloat(document.getElementById('percent3').value)) {
+        } else if (percentage <= percent3) {
             return document.getElementById('color3').value;
-        } else if (percentage <= parseFloat(document.getElementById('percent4').value)) {
-            return document.getElementById('color4').value;
-        } else if (percentage <= parseFloat(document.getElementById('percent5').value)) {
-            return document.getElementById('color5').value;
-        } else if (percentage <= parseFloat(document.getElementById('percent6').value)) {
-            return document.getElementById('color6').value;
         }
+        // 同様に他のパーセント範囲も追加
     }
 }
 
