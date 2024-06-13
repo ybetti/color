@@ -104,12 +104,4 @@ function getColorForValue(value, min, max) {
     }
 }
 
-function saveColorMapAsImage() {
-    const colorMap = document.getElementById('colorMap');
-    html2canvas(colorMap).then(canvas => {
-        const link = document.createElement('a');
-        link.download = 'colorMap.png';
-        link.href = canvas.toDataURL();
-        link.click();
-    });
-}
+
