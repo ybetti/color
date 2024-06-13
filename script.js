@@ -122,3 +122,4 @@ function getColorForValue(value, min, max) {
         return colors[colors.length - 1]; // Default to the last color if no match is found
     }
 }
+
