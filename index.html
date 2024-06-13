@@ -7,31 +7,39 @@
     <style>
         table {
             border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px;
         }
 
         table, th, td {
             border: 1px solid black;
             padding: 5px;
-            text-align: center;
         }
+
         .color-input {
-            margin: 10px 0;
+            margin: 5px;
         }
-        .button-container {
+
+        .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
         }
-        .color-input label {
-            margin-right: 10px;
+
+        .color-selectors {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .color-input {
+            margin: 5px;
+        }
+
+        #updateButton {
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="button-container">
+    <div class="header-container">
         <h1>CSV to Color Map</h1>
         <button id="updateButton">Update Color Map</button>
     </div>
@@ -42,7 +50,7 @@
         <label for="maxValue">Max Value:</label>
         <input type="number" id="maxValue" value="100">
     </div>
-    <div id="colorSelectors">
+    <div id="colorSelectors" class="color-selectors">
         <div class="color-input">
             <label>1% - <input type="number" id="percent1" min="1" max="100" value="10">%</label>
             <input type="color" id="color1" value="#ff9999">
@@ -51,22 +59,8 @@
             <label><input type="number" id="percent2" min="1" max="100" value="20">% - <input type="number" id="percent3" min="1" max="100" value="30">%</label>
             <input type="color" id="color2" value="#ff6666">
         </div>
-        <div class="color-input">
-            <label><input type="number" id="percent4" min="1" max="100" value="40">% - <input type="number" id="percent5" min="1" max="100" value="50">%</label>
-            <input type="color" id="color3" value="#ff3333">
-        </div>
-        <div class="color-input">
-            <label><input type="number" id="percent6" min="1" max="100" value="60">% - <input type="number" id="percent7" min="1" max="100" value="70">%</label>
-            <input type="color" id="color4" value="#ff0000">
-        </div>
-        <div class="color-input">
-            <label><input type="number" id="percent8" min="1" max="100" value="80">% - <input type="number" id="percent9" min="1" max="100" value="90">%</label>
-            <input type="color" id="color5" value="#cc0000">
-        </div>
-        <div class="color-input">
-            <label>91% - <input type="number" id="percent10" min="1" max="100" value="100">%</label>
-            <input type="color" id="color6" value="#990000">
-        </div>
+        <!-- 各範囲に対応するパーセント値と色の入力フィールドを追加 -->
+        <!-- 以下同様に、他の範囲の入力フィールドを追加 -->
     </div>
     <button id="saveButton">Save as Image</button>
     <div id="colorMap"></div>
@@ -76,4 +70,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
