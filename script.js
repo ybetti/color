@@ -82,43 +82,34 @@ function updateColorMap() {
 }
 
 function getColorForValue(value, min, max) {
-    const ranges = [
-        parseFloat(document.getElementById('range1').value),
-        parseFloat(document.getElementById('range2').value),
-        parseFloat(document.getElementById('range3').value),
-        parseFloat(document.getElementById('range4').value),
-        parseFloat(document.getElementById('range5').value),
-        parseFloat(document.getElementById('range6').value),
-        parseFloat(document.getElementById('range7').value),
-        parseFloat(document.getElementById('range8').value),
-        parseFloat(document.getElementById('range9').value),
-        parseFloat(document.getElementById('range10').value)
-    ];
-
-    const colors = [
-        document.getElementById('color1').value,
-        document.getElementById('color2').value,
-        document.getElementById('color3').value,
-        document.getElementById('color4').value,
-        document.getElementById('color5').value,
-        document.getElementById('color6').value,
-        document.getElementById('color7').value,
-        document.getElementById('color8').value,
-        document.getElementById('color9').value,
-        document.getElementById('color10').value
-    ];
-
     if (value <= min) {
-        return colors[0];
+        return document.getElementById('color1').value; // Use the color for 1-10% for min values
     } else if (value > max) {
-        return colors[colors.length - 1];
+        return document.getElementById('color6').value; // Use the color for 91-100% for max values
     } else {
         const percentage = (value - min) / (max - min) * 100;
-        for (let i = 0; i < ranges.length; i++) {
-            if (percentage <= ranges[i]) {
-                return colors[i];
-            }
+        if (percentage <= parseFloat(document.getElementById('percent1').value)) {
+            return document.getElementById('color1').value;
+        } else if (percentage <= parseFloat(document.getElementById('percent2').value)) {
+            return document.getElementById('color2').value;
+        } else if (percentage <= parseFloat(document.getElementById('percent3').value)) {
+            return document.getElementById('color3').value;
+        } else if (percentage <= parseFloat(document.getElementById('percent4').value)) {
+            return document.getElementById('color4').value;
+        } else if (percentage <= parseFloat(document.getElementById('percent5').value)) {
+            return document.getElementById('color5').value;
+        } else if (percentage <= parseFloat(document.getElementById('percent6').value)) {
+            return document.getElementById('color6').value;
         }
-        return colors[colors.length - 1]; // Default to the last color if no match is found
     }
+}
+
+function saveColorMapAsImage() {
+    const colorMap = document.getElementById('colorMap');
+    html2canvas(colorMap).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'colorMap.png';
+        link.href = canvas.toDataURL();
+        link.click();
+    });
 }
